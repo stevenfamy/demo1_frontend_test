@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/cookies.js"></script>
     <script src="/js/check_sessions.js"></script>
+    <script src="/js/resend_email.js"></script>
 
     <title>Login</title>
   </head>
@@ -62,9 +63,15 @@
             window.location.replace("/dashboard");
           })
           .catch((err) => {
-            if (err.response.status === 400)
-              document.getElementById("loginMessage").innerHTML =
-                err.response.data.error;
+            if (err.response.status === 400) {
+              let errRes = err.response.data.error;
+
+              if (!err.response.data.Email_verification) {
+                errRes +=
+                  ", <a href='#' onclick='resendEmail();'>Click here to resend email verification.</a>";
+              }
+              document.getElementById("loginMessage").innerHTML = errRes;
+            }
 
             if (err.response.status === 404)
               document.getElementById("loginMessage").innerHTML =

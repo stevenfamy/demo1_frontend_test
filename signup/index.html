@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/cookies.js"></script>
     <script src="/js/check_sessions.js"></script>
+    <script src="/js/resend_email.js"></script>
 
     <title>Login</title>
   </head>
@@ -128,7 +129,7 @@
 
                 if (!err.response.data.Email_verification) {
                   errRes +=
-                    ", <a href='#'>Click here to resend email verification.</a>";
+                    ", <a href='#' onclick='resendEmail();'>Click here to resend email verification.</a>";
                 }
                 document.getElementById("signupMessage").innerHTML = errRes;
               }
