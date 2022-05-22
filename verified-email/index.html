@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/cookies.js"></script>
+    <script src="/js/check_sessions.js"></script>
+    <script src="/js/resend_email.js"></script>
+
+    <title>Verified Email</title>
+  </head>
+  <body onload="checkSessions()">
+    <h2>Email Verification</h2>
+    <h3 id="verificationMessage"></h3>
+    <script>
+      // login onclick action
+      function doVerification() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const tokens = urlParams.get("tokens");
+        console.log(tokens);
+
+        if (!tokens) {
+          window.location.replace("/");
+        }
+
+        document.getElementById("verificationMessage").innerHTML = "";
+        const url = `http://localhost:5000/verifiy/${tokens}`;
+        axios
+          .post(url)
+          .then((res) => {
+            if (res.status === 200) setCookie("authToken", res.data.authToken);
+
+            window.location.replace("/dashboard");
+          })
+          .catch((err) => {
+            if (err.response.status === 400)
+              document.getElementById("verificationMessage").innerHTML =
+                err.response.data.error;
+
+            if (err.response.status === 500)
+              document.getElementById("verificationMessage").innerHTML =
+                err.response.data.error;
+          });
+      }
+    </script>
+  </body>
+</html>

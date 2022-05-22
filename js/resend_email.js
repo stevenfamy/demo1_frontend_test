@@ -21,10 +21,14 @@ function resendEmail() {
       if (err.response.status === 400)
         if (window.location.pathname === "/") {
           document.getElementById("loginMessage").innerHTML =
-            err.response.data.error;
+            err.response.data.error !== undefined
+              ? err.response.data.error
+              : err.response.data;
         } else if (window.location.pathname === "/signup/") {
           document.getElementById("signupMessage").innerHTML =
-            err.response.data.error;
+            err.response.data.error !== undefined
+              ? err.response.data.error
+              : err.response.data;
         }
       if (err.response.status === 404)
         if (window.location.pathname === "/") {
