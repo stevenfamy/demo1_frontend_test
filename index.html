@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/js/cookies.js"></script>
+    <script src="/js/check_sessions.js"></script>
+
+    <title>Login</title>
+  </head>
+  <body onload="checkSessions()">
+    <h2>Welcome, Please Login</h2>
+    <hr />
+    <div>
+      <h3 id="loginMessage"></h3>
+      <input type="email" name="email" id="email" placeholder="Email Address" />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Password"
+        value="aaaBBB!1"
+      />
+      <input
+        type="button"
+        value="Login"
+        id="doLogin"
+        name="doLogin"
+        onclick="doLogin()"
+      />
+    </div>
+    <br />
+    Or <a href="/signup/">Sign up</a>
+    <hr />
+
+    <script>
+      // login onclick action
+      function doLogin() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        if (!email || !password) {
+          const err = "Failed, Email & Password is Required!";
+          document.getElementById("loginMessage").innerHTML = err;
+          throw new Error(err);
+        }
+
+        document.getElementById("loginMessage").innerHTML = "";
+        eraseCookie("authToken");
+        const url = "http://localhost:5000/login";
+        const params = {
+          email: email,
+          password: password,
+        };
+        axios
+          .post(url, params)
+          .then((res) => {
+            if (res.status === 200) setCookie("authToken", res.data.authToken);
+
+            window.location.replace("/dashboard");
+          })
+          .catch((err) => {
+            if (err.response.status === 400)
+              document.getElementById("loginMessage").innerHTML =
+                err.response.data.error;
+
+            if (err.response.status === 404)
+              document.getElementById("loginMessage").innerHTML =
+                err.response.data.error;
+          });
+      }
+    </script>
+  </body>
+</html>
