@@ -17,21 +17,46 @@
     <a href="#" onclick="doLogout()">Logout</a>
 
     <hr />
-    <h3 id="profileMessage"></h3>
-    <input
-      type="text"
-      name="firstName"
-      id="firstName"
-      placeholder="First Name"
-    />
-    <input type="text" name="lastName" id="lastName" placeholder="Last Name" />
-    <input
-      type="button"
-      value="Update"
-      id="doUpdate"
-      name="doUpdate"
-      onclick="doUpdate()"
-    />
+    <h3 id="profileMessage" style="padding: 5px"></h3>
+    <table>
+      <tbody>
+        <tr>
+          <td style="padding: 5px">First Name</td>
+          <td style="padding: 5px">
+            <input
+              type="text"
+              name="firstName"
+              id="firstName"
+              placeholder="First Name"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 5px">Last Name</td>
+          <td style="padding: 5px">
+            <input
+              type="text"
+              name="lastName"
+              id="lastName"
+              placeholder="Last Name"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding: 5px">
+            <input
+              type="button"
+              value="Update"
+              id="doUpdate"
+              name="doUpdate"
+              onclick="doUpdate()"
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
     <script>
       function start() {
         checkSessions();
