@@ -172,7 +172,7 @@
           .then((res) => {
             if (res.status === 200) {
               document.getElementById("totalSignup").innerHTML =
-                res.data.totalActiveToday;
+                res.data.totalSignup;
               document.getElementById("totalActive").innerHTML =
                 res.data.totalActiveToday;
               document.getElementById("lastSeven").innerHTML =
