@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/cookies.js"></script>
     <script src="/js/check_sessions.js"></script>
     <script src="/js/resend_email.js"></script>
+    <script src="/js/oauth.js"></script>
 
     <title>Login</title>
   </head>
@@ -70,8 +72,26 @@
       />
     </div>
     <br />
-    Or
+    Or <br />
+    <br />
+    <div
+      id="g_id_onload"
+      data-client_id="539308330581-06iitsj5jblo5rfkrkg7m14vut14m374.apps.googleusercontent.com"
+      data-context="signin"
+      data-ux_mode="popup"
+      data-callback="doGoogleLogin"
+      data-auto_prompt="false"
+    ></div>
 
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-shape="pill"
+      data-theme="outline"
+      data-text="signup_with"
+      data-size="large"
+      data-logo_alignment="left"
+    ></div>
     <br />
     <br />
     <a href="/">Back to Login</a>
