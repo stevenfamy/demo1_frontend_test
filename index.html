@@ -15,13 +15,7 @@
   </head>
   <body onload="checkSessions()">
     <div id="fb-root"></div>
-    <script
-      async
-      defer
-      crossorigin="anonymous"
-      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=579725630016747&autoLogAppEvents=1"
-      nonce="0OJuoqqe"
-    ></script>
+
     <h2>Welcome, Please Login</h2>
     <hr />
     <div>
@@ -63,15 +57,12 @@
         data-logo_alignment="left"
       ></div>
       <div style="margin: 5px"></div>
-      <div
-        class="fb-login-button"
-        data-width="221"
-        data-size="large"
-        data-button-type="login_with"
-        data-layout="rounded"
-        data-auto-logout-link="false"
-        data-use-continue-as="true"
-      ></div>
+
+      <fb:login-button
+        scope="public_profile,email"
+        onlogin="checkLoginState();"
+      >
+      </fb:login-button>
     </div>
     <br />
     <br />
@@ -79,6 +70,33 @@
     <hr />
 
     <script>
+      FB.getLoginStatus(function (response) {
+        statusChangeCallback(response);
+      });
+
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "579725630016747",
+          cookie: true,
+          xfbml: true,
+          version: "v13.0",
+        });
+
+        FB.AppEvents.logPageView();
+      };
+
+      (function (d, s, id) {
+        var js,
+          fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+          return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      })(document, "script", "facebook-jssdk");
+
       // login onclick action
       function doLogin() {
         const email = document.getElementById("email").value;
