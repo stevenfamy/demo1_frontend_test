@@ -4,25 +4,16 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/cookies.js"></script>
     <script src="/js/check_sessions.js"></script>
+    <script src="/js/logout.js"></script>
     <title>Dashboard</title>
   </head>
   <body onload="checkSessions()">
     <h2>Welcome !</h2>
     <a href="/dashboard/">Home</a> | <a href="/profiles/">My Profile</a> |
     <a href="/users/">User Management</a> |
-    <a href="#" onclick="logout()">Logout</a>
-
-    <script>
-      function logout() {
-        const cookieSessions = getCookie("authToken");
-
-        if (cookieSessions) {
-          eraseCookie("authToken");
-          window.location.replace("/");
-        }
-      }
-    </script>
+    <a href="#" onclick="doLogout()">Logout</a>
   </body>
 </html>
