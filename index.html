@@ -68,7 +68,12 @@
     <br />
     Or <a href="/signup/">Sign up</a>
     <hr />
-
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js"
+    ></script>
     <script>
       FB.getLoginStatus(function (response) {
         statusChangeCallback(response);
