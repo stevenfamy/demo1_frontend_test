@@ -163,7 +163,7 @@
           "Content-Type": "application/json",
           authToken: cookieSessions,
         };
-        const url = `http://localhost:5000/user/profile`;
+        const url = `https://aha.stevenfamy.me:81/user/profile`;
 
         axios
           .get(url, { headers: headers })
@@ -180,7 +180,7 @@
               err.response.data.error;
           });
 
-        const url2 = `http://localhost:5000/user/has-password`;
+        const url2 = `https://aha.stevenfamy.me:81/user/has-password`;
 
         axios
           .get(url2, { headers: headers })
@@ -206,7 +206,7 @@
         const cookieSessions = getCookie("authToken");
         const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
-        const url = "http://localhost:5000/user/profile";
+        const url = "https://aha.stevenfamy.me:81/user/profile";
 
         const headers = {
           "Content-Type": "application/json",
@@ -236,7 +236,7 @@
         const confirmNewPassword =
           document.getElementById("confirmNewPassword").value;
 
-        const url = "http://localhost:5000/user/change-password";
+        const url = "https://aha.stevenfamy.me:81/user/change-password";
 
         const headers = {
           "Content-Type": "application/json",
@@ -283,7 +283,7 @@
           "confirmNewPassword2"
         ).value;
 
-        const url = "http://localhost:5000/user/create-password";
+        const url = "https://aha.stevenfamy.me:81/user/create-password";
 
         const headers = {
           "Content-Type": "application/json",

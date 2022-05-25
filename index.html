@@ -14,6 +14,14 @@
     <title>Login</title>
   </head>
   <body onload="checkSessions()">
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v13.0&appId=579725630016747&autoLogAppEvents=1"
+      nonce="0OJuoqqe"
+    ></script>
     <h2>Welcome, Please Login</h2>
     <hr />
     <div>
@@ -35,24 +43,37 @@
       />
     </div>
     <br />
-    <div
-      id="g_id_onload"
-      data-client_id="539308330581-06iitsj5jblo5rfkrkg7m14vut14m374.apps.googleusercontent.com"
-      data-context="signin"
-      data-ux_mode="popup"
-      data-callback="doGoogleLogin"
-      data-auto_prompt="false"
-    ></div>
+    <div style="display: flex">
+      <div
+        id="g_id_onload"
+        data-client_id="539308330581-06iitsj5jblo5rfkrkg7m14vut14m374.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="doGoogleLogin"
+        data-auto_prompt="false"
+      ></div>
 
-    <div
-      class="g_id_signin"
-      data-type="standard"
-      data-shape="pill"
-      data-theme="outline"
-      data-text="signin_with"
-      data-size="large"
-      data-logo_alignment="left"
-    ></div>
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-shape="pill"
+        data-theme="outline"
+        data-text="signin_with"
+        data-size="large"
+        data-logo_alignment="left"
+      ></div>
+      <div style="margin: 5px"></div>
+      <div
+        class="fb-login-button"
+        data-width="221"
+        data-size="large"
+        data-button-type="login_with"
+        data-layout="rounded"
+        data-auto-logout-link="false"
+        data-use-continue-as="true"
+      ></div>
+    </div>
+    <br />
     <br />
     Or <a href="/signup/">Sign up</a>
     <hr />
@@ -71,7 +92,7 @@
 
         document.getElementById("loginMessage").innerHTML = "";
         eraseCookie("authToken");
-        const url = "http://localhost:5000/login";
+        const url = "https://aha.stevenfamy.me:81/login";
         const params = {
           email: email,
           password: password,

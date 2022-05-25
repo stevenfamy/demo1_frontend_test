@@ -118,7 +118,7 @@
           "Content-Type": "application/json",
           authToken: cookieSessions,
         };
-        const url = `http://localhost:5000/user/`;
+        const url = `https://aha.stevenfamy.me:81/user/`;
 
         axios
           .get(url, { headers: headers })
@@ -165,7 +165,7 @@
             }
           });
 
-        const url2 = `http://localhost:5000/user/stat`;
+        const url2 = `https://aha.stevenfamy.me:81/user/stat`;
 
         axios
           .get(url2, { headers: headers })

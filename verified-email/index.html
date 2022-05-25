@@ -27,7 +27,7 @@
         }
 
         document.getElementById("verificationMessage").innerHTML = "";
-        const url = `http://localhost:5000/verifiy/${tokens}`;
+        const url = `https://aha.stevenfamy.me:81/verifiy/${tokens}`;
         axios
           .post(url)
           .then((res) => {

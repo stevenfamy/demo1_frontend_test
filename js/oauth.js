@@ -1,5 +1,5 @@
 function doGoogleLogin(response) {
-  const url = "http://localhost:5000/login-oauth";
+  const url = "https://aha.stevenfamy.me:81/login-oauth";
   const params = {
     type: "Google",
     jwtToken: response.credential,
