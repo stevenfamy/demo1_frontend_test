@@ -11,23 +11,50 @@
     <script src="/js/logout.js"></script>
     <title>Users Management</title>
     <style>
-      table {
+      table.userList {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
         width: 100%;
       }
 
-      table td,
-      table thead {
+      table.userList td,
+      table.userList thead {
         border: 1px solid #ddd;
         padding: 8px;
       }
 
-      table tr:nth-child(even) {
+      table.userList tr:nth-child(even) {
         background-color: #f2f2f2;
       }
 
-      table thead {
+      table.userList thead {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #0446aa;
+        color: white;
+      }
+
+      table.stat {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 30%;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+
+      table.stat td,
+      table.stat thead {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+
+      table.stat tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      table.stat thead {
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
@@ -42,7 +69,32 @@
     <a href="/users/">Users Management</a> |
     <a href="#" onclick="doLogout()">Logout</a>
     <hr />
-    <table>
+    <table class="stat">
+      <thead>
+        <tr>
+          <td>
+            Total <br />
+            Signup
+          </td>
+          <td>
+            Total Active <br />
+            Sessions Today
+          </td>
+          <td>
+            Active session <br />
+            last 7 days
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="totalSignup"></td>
+          <td id="totalActive"></td>
+          <td id="lastSeven"></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="userList">
       <thead>
         <tr>
           <td>Full Name</td>
@@ -50,6 +102,7 @@
           <td>Signed up on</td>
           <td>Total Login</td>
           <td>Last Login on</td>
+          <td>Last Seen</td>
         </tr>
       </thead>
       <tbody id="userListBody"></tbody>
@@ -78,17 +131,31 @@
                   user.users_profile.last_name
                 }</td>
                   <td>${user.email}</td>
-                  <td>${DateTime.fromISO(user.created_on).toLocaleString(
-                    DateTime.DATETIME_FULL
-                  )}</td>
+                  <td>${
+                    user.created_on !== null
+                      ? DateTime.fromISO(user.created_on).toLocaleString(
+                          DateTime.DATETIME_FULL
+                        )
+                      : "N/A"
+                  }</td>
                   <td>${user.total_login}</td>
-                  <td>${DateTime.fromISO(user.last_login).toLocaleString(
-                    DateTime.DATETIME_FULL
-                  )}</td>
+                  <td>${
+                    user.last_login !== null
+                      ? DateTime.fromISO(user.last_login).toLocaleString(
+                          DateTime.DATETIME_FULL
+                        )
+                      : "N/A"
+                  }</td>
+                  <td>${
+                    user.last_seen !== null
+                      ? DateTime.fromISO(user.last_seen).toLocaleString(
+                          DateTime.DATETIME_FULL
+                        )
+                      : "N/A"
+                  }</td>
                   </tr>`;
               });
               document.getElementById("userListBody").innerHTML = content;
-              console.log(res);
             }
           })
           .catch((err) => {
@@ -96,6 +163,24 @@
               document.getElementById("userListBody").innerHTML =
                 "<tr><td colspan='5'>No Data</td></tr>";
             }
+          });
+
+        const url2 = `http://localhost:5000/user/stat`;
+
+        axios
+          .get(url2, { headers: headers })
+          .then((res) => {
+            if (res.status === 200) {
+              document.getElementById("totalSignup").innerHTML =
+                res.data.totalActiveToday;
+              document.getElementById("totalActive").innerHTML =
+                res.data.totalActiveToday;
+              document.getElementById("lastSeven").innerHTML =
+                res.data.totalActiveWeek;
+            }
+          })
+          .catch((err) => {
+            console.log(err.response.data.error);
           });
       }
     </script>
