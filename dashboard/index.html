@@ -10,10 +10,36 @@
     <script src="/js/logout.js"></script>
     <title>Dashboard</title>
   </head>
-  <body onload="checkSessions()">
-    <h2>Welcome !</h2>
+  <body onload="start()">
+    <h2>Welcome <span id="userFullName"></span>!</h2>
     <a href="/dashboard/">Home</a> | <a href="/profiles/">My Profile</a> |
     <a href="/users/">User Management</a> |
     <a href="#" onclick="doLogout()">Logout</a>
   </body>
+  <script>
+    function start() {
+      checkSessions();
+
+      const cookieSessions = getCookie("authToken");
+      const headers = {
+        "Content-Type": "application/json",
+        authToken: cookieSessions,
+      };
+
+      const url = `http://localhost:5000/user/profile/`;
+      axios
+        .get(url, { headers: headers })
+        .then((res) => {
+          if (res.status === 200) {
+            console.log(res.data.userProfile.firstName);
+            document.getElementById(
+              "userFullName"
+            ).innerHTML = `${res.data.userProfile.firstName} ${res.data.userProfile.lastName}`;
+          }
+        })
+        .catch((err) => {
+          console.log(err.response.data.error);
+        });
+    }
+  </script>
 </html>
