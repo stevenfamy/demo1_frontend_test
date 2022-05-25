@@ -170,11 +170,6 @@
         const confirmNewPassword =
           document.getElementById("confirmNewPassword").value;
 
-        if (newPassword !== confirmNewPassword) {
-          const err = "New Password & Confirm New Password not match!";
-          document.getElementById("passwordMessage").innerHTML = err;
-          throw new Error(err);
-        }
         const url = "http://localhost:5000/user/change-password";
 
         const headers = {
@@ -184,6 +179,7 @@
         const params = {
           password,
           newPassword,
+          confirmNewPassword,
         };
 
         axios
