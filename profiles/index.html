@@ -17,7 +17,8 @@
     <a href="#" onclick="doLogout()">Logout</a>
 
     <hr />
-    <h3 id="profileMessage" style="padding: 5px"></h3>
+    <h4>Profile Details</h4>
+    <h3 id="profileMessage"></h3>
     <table>
       <tbody>
         <tr>
@@ -56,7 +57,58 @@
         </tr>
       </tbody>
     </table>
-
+    <hr />
+    <h4>Change Password</h4>
+    <h3 id="passwordMessage"></h3>
+    <table>
+      <tbody>
+        <tr>
+          <td style="padding: 5px">Current Password</td>
+          <td style="padding: 5px">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Current Password"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 5px">New Password</td>
+          <td style="padding: 5px">
+            <input
+              type="password"
+              name="newPassword"
+              id="newPassword"
+              placeholder="New Password"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 5px">Confirm New Password</td>
+          <td style="padding: 5px">
+            <input
+              type="password"
+              name="confirmNewPassword"
+              id="confirmNewPassword"
+              placeholder="Confirm New Password"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding: 5px">
+            <input
+              type="button"
+              value="Change Password"
+              id="doChangePwd"
+              name="doChangePwd"
+              onclick="doChangePwd()"
+              style="width: 100%"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <script>
       function start() {
         checkSessions();
@@ -108,6 +160,57 @@
           .catch((err) => {
             document.getElementById("profileMessage").innerHTML =
               err.response.data.error;
+          });
+      }
+
+      function doChangePwd() {
+        const cookieSessions = getCookie("authToken");
+        const password = document.getElementById("password").value;
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmNewPassword =
+          document.getElementById("confirmNewPassword").value;
+
+        if (newPassword !== confirmNewPassword) {
+          const err = "New Password & Confirm New Password not match!";
+          document.getElementById("passwordMessage").innerHTML = err;
+          throw new Error(err);
+        }
+        const url = "http://localhost:5000/user/change-password";
+
+        const headers = {
+          "Content-Type": "application/json",
+          authToken: cookieSessions,
+        };
+        const params = {
+          password,
+          newPassword,
+        };
+
+        axios
+          .post(url, params, { headers: headers })
+          .then((res) => {
+            document.getElementById("passwordMessage").innerHTML =
+              "Successfully change your password!";
+
+            document.getElementById("password").value = "";
+            document.getElementById("newPassword").value = "";
+            document.getElementById("confirmNewPassword").value = "";
+          })
+          .catch((err) => {
+            if (err.response.status === 400) {
+              if (err.response.data.validationFailed) {
+                let errRes = "Failed, <br />";
+                const validationRes = err.response.data.checkPasswordResult;
+                for (const valErr of validationRes) {
+                  errRes += valErr.message + " <br /> ";
+                }
+                document.getElementById("passwordMessage").innerHTML = errRes;
+              } else {
+                let errRes = err.response.data.error;
+
+                document.getElementById("passwordMessage").innerHTML = errRes;
+              }
+            }
           });
       }
     </script>
