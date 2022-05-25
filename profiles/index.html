@@ -4,24 +4,86 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/cookies.js"></script>
     <script src="/js/check_sessions.js"></script>
+    <script src="/js/logout.js"></script>
     <title>My Profile</title>
   </head>
-  <body onload="checkSessions()">
+  <body onload="start()">
     <h2>My Profile</h2>
     <a href="/dashboard/">Home</a> | <a href="/profiles/">My Profile</a> |
     <a href="/users/">User Management</a> |
-    <a href="#" onclick="logout()">Logout</a>
+    <a href="#" onclick="doLogout()">Logout</a>
 
+    <hr />
+    <h3 id="profileMessage"></h3>
+    <input
+      type="text"
+      name="firstName"
+      id="firstName"
+      placeholder="First Name"
+    />
+    <input type="text" name="lastName" id="lastName" placeholder="Last Name" />
+    <input
+      type="button"
+      value="Update"
+      id="doUpdate"
+      name="doUpdate"
+      onclick="doUpdate()"
+    />
     <script>
-      function logout() {
-        const cookieSessions = getCookie("authToken");
+      function start() {
+        checkSessions();
 
-        if (cookieSessions) {
-          eraseCookie("authToken");
-          window.location.replace("/");
-        }
+        const cookieSessions = getCookie("authToken");
+        const headers = {
+          "Content-Type": "application/json",
+          authToken: cookieSessions,
+        };
+        const url = `http://localhost:5000/user/profile`;
+
+        axios
+          .get(url, { headers: headers })
+          .then((res) => {
+            if (res.status === 200) {
+              document.getElementById("firstName").value =
+                res.data.userProfile.firstName;
+              document.getElementById("lastName").value =
+                res.data.userProfile.lastName;
+            }
+          })
+          .catch((err) => {
+            document.getElementById("profileMessage").innerHTML =
+              err.response.data.error;
+          });
+      }
+
+      function doUpdate() {
+        const cookieSessions = getCookie("authToken");
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const url = "http://localhost:5000/user/profile";
+
+        const headers = {
+          "Content-Type": "application/json",
+          authToken: cookieSessions,
+        };
+        const params = {
+          firstName,
+          lastName,
+        };
+
+        axios
+          .put(url, params, { headers: headers })
+          .then((res) => {
+            document.getElementById("profileMessage").innerHTML =
+              "Successfully save your profile";
+          })
+          .catch((err) => {
+            document.getElementById("profileMessage").innerHTML =
+              err.response.data.error;
+          });
       }
     </script>
   </body>
