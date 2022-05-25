@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="/js/cookies.js"></script>
     <script src="/js/check_sessions.js"></script>
@@ -32,6 +33,25 @@
         onclick="doLogin()"
       />
     </div>
+    <br />
+    <div
+      id="g_id_onload"
+      data-client_id="539308330581-06iitsj5jblo5rfkrkg7m14vut14m374.apps.googleusercontent.com"
+      data-context="signin"
+      data-ux_mode="popup"
+      data-callback="doGoogleLogin"
+      data-auto_prompt="false"
+    ></div>
+
+    <div
+      class="g_id_signin"
+      data-type="standard"
+      data-shape="pill"
+      data-theme="outline"
+      data-text="signin_with"
+      data-size="large"
+      data-logo_alignment="left"
+    ></div>
     <br />
     Or <a href="/signup/">Sign up</a>
     <hr />
@@ -74,6 +94,37 @@
             }
 
             if (err.response.status === 404)
+              document.getElementById("loginMessage").innerHTML =
+                err.response.data.error;
+          });
+      }
+
+      function doGoogleLogin(response) {
+        const url = "http://localhost:5000/login-oauth";
+        const params = {
+          type: "Google",
+          jwtToken: response.credential,
+        };
+
+        axios
+          .post(url, params)
+          .then((res) => {
+            if (res.status === 200) setCookie("authToken", res.data.authToken);
+
+            window.location.replace("/dashboard");
+          })
+          .catch((err) => {
+            if (err.response.status === 400) {
+              let errRes = err.response.data.error;
+
+              if (!err.response.data.Email_verification) {
+                errRes +=
+                  ", <a href='#' onclick='resendEmail();'>Click here to resend email verification.</a>";
+              }
+              document.getElementById("loginMessage").innerHTML = errRes;
+            }
+
+            if (err.response.status === 404 || err.response.status === 500)
               document.getElementById("loginMessage").innerHTML =
                 err.response.data.error;
           });
