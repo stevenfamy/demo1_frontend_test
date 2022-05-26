@@ -170,7 +170,7 @@
               } else {
                 let errRes = err.response.data.Error;
 
-                if (!err.response.data.Email_verification) {
+                if (!err.response.data.Email_verification === false) {
                   errRes +=
                     ", <a href='#' onclick='resendEmail();'>Click here to resend email verification.</a>";
                 }
