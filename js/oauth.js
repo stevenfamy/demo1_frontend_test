@@ -1,5 +1,5 @@
 function doOauth(response, type = "Google") {
-  const url = "http://localhost:5000/login-oauth";
+  const url = "https://aha.stevenfamy.me:81/login-oauth";
   const params = {
     type: type,
     jwtToken:
@@ -45,29 +45,3 @@ function checkLoginState() {
     statusChangeCallback(response);
   });
 }
-
-// function doFbLogin(response) {
-//   const url = "http://localhost:5000/login-oauth";
-//   const params = {
-//     type: "Facebook",
-//     jwtToken: response.authResponse.accessToken,
-//   };
-//   console.log(params);
-//   axios
-//     .post(url, params)
-//     .then((res) => {
-//       if (res.status === 200) setCookie("authToken", res.data.authToken);
-//       window.location.replace("/dashboard");
-//     })
-//     .catch((err) => {
-//       if (err.response.status === 400) {
-//         let errRes = err.response.data.error;
-
-//         document.getElementById("loginMessage").innerHTML = errRes;
-//       }
-
-//       if (err.response.status === 404 || err.response.status === 500)
-//         document.getElementById("loginMessage").innerHTML =
-//           err.response.data.error;
-//     });
-// }
