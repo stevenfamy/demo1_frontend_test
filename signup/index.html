@@ -14,6 +14,14 @@
     <title>Sign up</title>
   </head>
   <body onload="checkSessions()">
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0&appId=579725630016747&autoLogAppEvents=1"
+      nonce="XSfLauKo"
+    ></script>
     <h2>Create your account</h2>
     <hr />
     <div>
@@ -74,24 +82,39 @@
     <br />
     Or <br />
     <br />
-    <div
-      id="g_id_onload"
-      data-client_id="539308330581-06iitsj5jblo5rfkrkg7m14vut14m374.apps.googleusercontent.com"
-      data-context="signin"
-      data-ux_mode="popup"
-      data-callback="doGoogleLogin"
-      data-auto_prompt="false"
-    ></div>
+    <div style="display: flex">
+      <div
+        id="g_id_onload"
+        data-client_id="539308330581-06iitsj5jblo5rfkrkg7m14vut14m374.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="doOauth"
+        data-auto_prompt="false"
+      ></div>
 
-    <div
-      class="g_id_signin"
-      data-type="standard"
-      data-shape="pill"
-      data-theme="outline"
-      data-text="signup_with"
-      data-size="large"
-      data-logo_alignment="left"
-    ></div>
+      <div
+        class="g_id_signin"
+        data-type="standard"
+        data-shape="pill"
+        data-theme="outline"
+        data-text="signup_with"
+        data-size="large"
+        data-logo_alignment="left"
+      ></div>
+      <div style="margin: 5px"></div>
+
+      <div
+        class="fb-login-button"
+        data-width="221"
+        data-size="large"
+        data-button-type="continue_with"
+        data-layout="rounded"
+        data-auto-logout-link="false"
+        data-use-continue-as="false"
+        data-onlogin="checkLoginState();"
+        data-scope="public_profile,email"
+      ></div>
+    </div>
     <br />
     <br />
     <a href="/">Back to Login</a>

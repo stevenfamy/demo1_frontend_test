@@ -1,8 +1,11 @@
-function doGoogleLogin(response) {
-  const url = "https://aha.stevenfamy.me:81/login-oauth";
+function doOauth(response, type = "Google") {
+  const url = "http://localhost:5000/login-oauth";
   const params = {
-    type: "Google",
-    jwtToken: response.credential,
+    type: type,
+    jwtToken:
+      type === "Google"
+        ? response.credential
+        : response.authResponse.accessToken,
   };
 
   axios
@@ -16,10 +19,6 @@ function doGoogleLogin(response) {
       if (err.response.status === 400) {
         let errRes = err.response.data.error;
 
-        if (!err.response.data.Email_verification) {
-          errRes +=
-            ", <a href='#' onclick='resendEmail();'>Click here to resend email verification.</a>";
-        }
         document.getElementById("loginMessage").innerHTML = errRes;
       }
 
@@ -28,3 +27,47 @@ function doGoogleLogin(response) {
           err.response.data.error;
     });
 }
+
+//fb login
+function statusChangeCallback(response) {
+  console.log(response);
+  if (response.status === "connected") {
+    FB.api("/me", { fields: "name, email" }, function (response2) {
+      doOauth(response, "Facebook");
+    });
+  } else {
+    console.log("Need to relogin");
+  }
+}
+
+function checkLoginState() {
+  FB.getLoginStatus(function (response) {
+    statusChangeCallback(response);
+  });
+}
+
+// function doFbLogin(response) {
+//   const url = "http://localhost:5000/login-oauth";
+//   const params = {
+//     type: "Facebook",
+//     jwtToken: response.authResponse.accessToken,
+//   };
+//   console.log(params);
+//   axios
+//     .post(url, params)
+//     .then((res) => {
+//       if (res.status === 200) setCookie("authToken", res.data.authToken);
+//       window.location.replace("/dashboard");
+//     })
+//     .catch((err) => {
+//       if (err.response.status === 400) {
+//         let errRes = err.response.data.error;
+
+//         document.getElementById("loginMessage").innerHTML = errRes;
+//       }
+
+//       if (err.response.status === 404 || err.response.status === 500)
+//         document.getElementById("loginMessage").innerHTML =
+//           err.response.data.error;
+//     });
+// }
