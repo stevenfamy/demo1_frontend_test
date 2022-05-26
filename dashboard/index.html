@@ -15,6 +15,50 @@
     <a href="/dashboard/">Home</a> | <a href="/profiles/">My Profile</a> |
     <a href="/users/">User Management</a> |
     <a href="#" onclick="doLogout()">Logout</a>
+    <hr />
+    <h4>Backend Demonstration</h4>
+    <ul>
+      <li>Using NodeJs (Javascript).</li>
+      <li>MySQL 8 Database on DigitalOcean Cluster.</li>
+      <li>Server hosted on DigitalOcean Droplets.</li>
+      <li>Front-end Simple HTML/Javascript serve using NGINX server.</li>
+      <li>
+        Backend build as docker image, run using docker-compose as container
+        <br />
+        then serve using NGINX forward proxy.
+      </li>
+      <li>
+        Backend API Documentation available
+        <a target="_blank" href="https://aha.stevenfamy.me:81/api-docs">here</a>
+        using Swagger Library.
+      </li>
+    </ul>
+    <h4>Features</h4>
+    <ul>
+      <li>Sign-up using Email Address</li>
+      <li>Send Email verification after manual sign-up</li>
+      <li>Sign-up and or login via Google Account</li>
+      <li>Sign-up and or login via Facebook Account</li>
+      <li>
+        Auto combine Account/link account that sign-up by email and <br />
+        Google/Facebook account if using same email address
+      </li>
+      <li>Cookies based session on Front-end</li>
+      <li>Multi-device login session</li>
+      <li>Logout function</li>
+      <li>Private API access only if has valid authToken</li>
+      <li>See & Update own user profile</li>
+      <li>
+        Create account password if sign-up or login using OAuth
+        (Facebook/Google)
+      </li>
+      <li>Change Password</li>
+      <li>
+        See list of user on system, when they sign-up, last login and <br />
+        last active (based on API Access)
+      </li>
+      <li>Simple user statistics</li>
+    </ul>
   </body>
   <script>
     function start() {
