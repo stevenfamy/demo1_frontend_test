@@ -1,7 +1,7 @@
 function doLogout() {
   const cookieSessions = getCookie("authToken");
 
-  const url = "https://aha.stevenfamy.me:81/logout";
+  const url = "https://demo1.stevenfamy.me:81/logout";
   const headers = {
     "Content-Type": "application/json",
     authToken: cookieSessions,

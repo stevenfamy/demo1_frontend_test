@@ -1,7 +1,7 @@
 function resendEmail() {
   const email = document.getElementById("email").value;
 
-  const url = "https://aha.stevenfamy.me:81/resend-verification-email";
+  const url = "https://demo1.stevenfamy.me:81/resend-verification-email";
   const params = {
     email: document.getElementById("email").value,
   };

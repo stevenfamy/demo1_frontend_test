@@ -1,5 +1,5 @@
 function doOauth(response, type = "Google") {
-  const url = "https://aha.stevenfamy.me:81/login-oauth";
+  const url = "https://demo1.stevenfamy.me:81/login-oauth";
   const params = {
     type: type,
     jwtToken:
